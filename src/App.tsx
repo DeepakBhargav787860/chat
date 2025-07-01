@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const socket = new WebSocket("ws://localhost:8080/ws");
 
@@ -8,7 +8,7 @@ function App() {
   const [username, setUsername] = useState(
     "user" + Math.floor(Math.random() * 100)
   );
-
+  console.log(setUsername);
   useEffect(() => {
     socket.onmessage = (event) => {
       const msg = JSON.parse(event.data);
