@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const socket = new WebSocket("ws://localhost:8080/ws");
+const socket = new WebSocket("wss://mysocket-6xmu.onrender.com/ws");
 
 function App() {
   const [messages, setMessages] = useState<any>([]);
@@ -44,7 +44,7 @@ function App() {
         onChange={(e) => setInput(e.target.value)}
         placeholder="Type message"
       />
-      <button onClick={sendMessage}>Send</button>
+      <button onClick={sendMessage}>Sendssssss</button>
     </div>
   );
 }
