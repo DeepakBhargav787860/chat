@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 const socket = new WebSocket("wss://mysocket-6xmu.onrender.com/ws");
+const health = new WebSocket("wss://mysocket-6xmu.onrender.com/health");
 
 function App() {
   const [messages, setMessages] = useState<any>([]);
@@ -20,6 +21,12 @@ function App() {
     const msg = { username, content: input };
     socket.send(JSON.stringify(msg));
     setInput("");
+  };
+
+  const healthCheck = () => {
+    health.onmessage = (e) => {
+      alert(e);
+    };
   };
 
   return (
@@ -45,6 +52,7 @@ function App() {
         placeholder="Type message"
       />
       <button onClick={sendMessage}>Sendssssss</button>
+      <button onClick={healthCheck}>check health</button>
     </div>
   );
 }
