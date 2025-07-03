@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 
 const socket = new WebSocket("wss://mysocket-6xmu.onrender.com/ws");
-const health = new WebSocket("wss://mysocket-6xmu.onrender.com/health");
+const health = "https://mysocket-6xmu.onrender.com/health";
+// const socket = new WebSocket("ws://localhost:8080/ws");
+// const health = "http://localhost:8080/health";
 
 function App() {
   const [messages, setMessages] = useState<any>([]);
@@ -23,11 +25,22 @@ function App() {
     setInput("");
   };
 
-  const healthCheck = () => {
-    health.onmessage = (e) => {
-      alert(e);
-    };
-  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetch(health)
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          console.log(data.response);
+        })
+        .catch((err) => {
+          console.error("Error:", err);
+        });
+    }, 300000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div style={{ padding: 20 }}>
@@ -52,7 +65,6 @@ function App() {
         placeholder="Type message"
       />
       <button onClick={sendMessage}>Sendssssss</button>
-      <button onClick={healthCheck}>check health</button>
     </div>
   );
 }
